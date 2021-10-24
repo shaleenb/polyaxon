@@ -1,0 +1,20 @@
+version: 1.1
+kind: component
+tags: [scikit-learn]
+inputs:
+- {name: n_estimators, type: int, isOptional: true, value: 50}
+- {name: max_depth, type: int, isOptional: true, value: 3}
+
+run:
+  kind: job
+  init:
+  - git: {url: "https://github.com/shaleenb/polyaxon"}
+  container:
+    image: polyaxon/polyaxon-quick-start
+    workingDir: "{{ globals.artifacts_path }}/polyaxon"
+    command: [python3, model.py]
+    args: [
+      "--n_estimators={{ n_estimators }}",
+      "--max_depth={{ max_depth }}",
+      "--input_path={{ input_path }}"
+    ]

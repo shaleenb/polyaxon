@@ -1,0 +1,18 @@
+version: 1.1
+kind: operation
+matrix:
+  kind: grid
+  concurrency: 3
+  params:
+    max_depth:
+      kind: choice
+      value: [3, 4]
+    n_estimators:
+      kind: range
+      value: [50, 151, 50]
+  earlyStopping:
+    - kind: metric_early_stopping
+      metric: accuracy_mean
+      value: 0.9
+      optimization: maximize
+pathRef: ./polyaxonfile_hyperparam.yml
