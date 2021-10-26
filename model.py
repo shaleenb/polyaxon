@@ -17,7 +17,11 @@ from sklearn.model_selection import cross_val_score
 
 def load_data():
     credentials = service_account.Credentials.from_service_account_file(
-        '/etc/secrets/credentials.json', scopes=["https://www.googleapis.com/auth/cloud-platform"],
+        "/etc/secrets/credentials.json",
+        scopes=[
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/bigquery",
+        ],
     )
     client = bigquery.Client(credentials=credentials, project=credentials.project_id)
     query = "SELECT CustomerID FROM loyal-copilot-329917.churn.cust_demo_info"
