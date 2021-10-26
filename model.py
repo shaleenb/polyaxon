@@ -20,11 +20,11 @@ def load_data():
         "/etc/secrets/credentials.json",
         scopes=[
             "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/bigquery",
+            # "https://www.googleapis.com/auth/bigquery",
         ],
     )
-    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
-    query = "SELECT CustomerID FROM loyal-copilot-329917.churn.cust_demo_info"
+    client = bigquery.Client()
+    query = "SELECT * FROM loyal-copilot-329917.churn.cust_demo_info"
     df_entity = client.query(query).to_dataframe()
     df_entity["event_timestamp"] = pd.Timestamp("2021-07-31", tz="UTC")
 
@@ -58,7 +58,7 @@ def load_data():
 
     training_df = fs.get_historical_features(features=features, entity_df=df_entity).to_df()
 
-    X = training_df.drop(columns="Churn")
+    X = training_df.drop(columns=["Churn", "CustomerID", "event_timestamp"])
     y = training_df["Churn"]
 
     return X, y
