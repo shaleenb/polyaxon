@@ -9,12 +9,12 @@ run:
   kind: job
   init:
   - git: {url: "https://github.com/shaleenb/polyaxon"}
+
   container:
-    image: polyaxon/polyaxon-quick-start
+    image: gcr.io/loyal-copilot-329917/polyaxon
     workingDir: "{{ globals.artifacts_path }}/polyaxon"
     command: [python3, model.py]
     args: [
       "--n_estimators={{ n_estimators }}",
-      "--max_depth={{ max_depth }}",
-      "--input_path={{ input_path }}"
+      "--max_depth={{ max_depth }}"
     ]

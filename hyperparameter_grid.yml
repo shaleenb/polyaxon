@@ -15,4 +15,4 @@ matrix:
       metric: accuracy_mean
       value: 0.9
       optimization: maximize
-pathRef: ./polyaxonfile_hyperparam.yml
+pathRef: ./polyaxonfile.yml

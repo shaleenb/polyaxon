@@ -8,15 +8,18 @@ import pandas as pd
 from feast import FeatureStore, RepoConfig
 from feast.infra.offline_stores.bigquery import BigQueryOfflineStoreConfig
 from google.cloud import bigquery
+from google.oauth2 import service_account
 from polyaxon import tracking
 from polyaxon.tracking import Run
-# from polyaxon.tracking.contrib.scikit import log_classifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 
 
 def load_data():
-    client = bigquery.Client()
+    credentials = service_account.Credentials.from_service_account_file(
+        '/etc/secrets/credentials.json', scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    )
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
     query = "SELECT CustomerID FROM loyal-copilot-329917.churn.cust_demo_info"
     df_entity = client.query(query).to_dataframe()
     df_entity["event_timestamp"] = pd.Timestamp("2021-07-31", tz="UTC")

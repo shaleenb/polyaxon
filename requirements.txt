@@ -1,0 +1,6 @@
+scikit-learn
+pandas
+polyaxon
+feast
+google-cloud-bigquery
+google-auth
