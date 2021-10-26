@@ -1,6 +1,6 @@
 scikit-learn
 pandas
 polyaxon
-feast
+feast[gcp]
 google-cloud-bigquery
 google-auth
