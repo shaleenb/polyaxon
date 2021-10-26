@@ -71,6 +71,8 @@ def main():
 
     args = parser.parse_args()
 
+    tracking.init()
+
     (X, y) = load_data()
 
     tracking.log_data_ref(content=X, name="dataset_X")
