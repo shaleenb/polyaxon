@@ -94,7 +94,7 @@ def main():
     with tempfile.TemporaryDirectory() as d:
         model_path = os.path.join(d, "model.joblib")
         joblib.dump(classifier, model_path)
-        tracking.log_model(model_path, name="model", framework="scikit-learn", versioned=False)
+        experiment.log_model(model_path, name="model", framework="scikit-learn", versioned=False)
 
 
 if __name__ == "__main__":
