@@ -10,7 +10,6 @@ from feast.infra.offline_stores.bigquery import BigQueryOfflineStoreConfig
 from google.cloud import bigquery
 from google.oauth2 import service_account
 from polyaxon import tracking
-from polyaxon.tracking import Run
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 
@@ -72,13 +71,10 @@ def main():
 
     args = parser.parse_args()
 
-    # Polyaxon
-    experiment = Run()
-
     (X, y) = load_data()
 
-    experiment.log_data_ref(content=X, name="dataset_X")
-    experiment.log_data_ref(content=y, name="dataset_y")
+    tracking.log_data_ref(content=X, name="dataset_X")
+    tracking.log_data_ref(content=y, name="dataset_y")
 
     classifier = RandomForestClassifier(n_estimators=args.n_estimators, max_depth=args.max_depth)
 
@@ -89,12 +85,12 @@ def main():
     classifier.fit(X, y)
 
     # Polyaxon
-    experiment.log_metrics(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)
+    tracking.log_metrics(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)
 
     with tempfile.TemporaryDirectory() as d:
         model_path = os.path.join(d, "model.joblib")
         joblib.dump(classifier, model_path)
-        experiment.log_model(model_path, name="model", framework="scikit-learn", versioned=False)
+        tracking.log_model(model_path, name="model", framework="scikit-learn", versioned=False)
 
 
 if __name__ == "__main__":
