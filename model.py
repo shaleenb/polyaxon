@@ -13,7 +13,6 @@ from polyaxon import tracking
 from polyaxon.tracking.contrib.scikit import log_classifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
-import time
 
 
 def load_data():
@@ -74,8 +73,6 @@ def main():
     args = parser.parse_args()
 
     tracking.init()
-
-    time.sleep(5000)
 
     (X, y) = load_data()
 
