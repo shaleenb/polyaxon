@@ -16,13 +16,13 @@ from sklearn.model_selection import cross_val_score
 
 
 def load_data():
-    credentials = service_account.Credentials.from_service_account_file(
-        "/etc/secrets/credentials.json",
-        scopes=[
-            "https://www.googleapis.com/auth/cloud-platform",
-            # "https://www.googleapis.com/auth/bigquery",
-        ],
-    )
+    # credentials = service_account.Credentials.from_service_account_file(
+    #     "/etc/secrets/credentials.json",
+    #     scopes=[
+    #         "https://www.googleapis.com/auth/cloud-platform",
+    #         # "https://www.googleapis.com/auth/bigquery",
+    #     ],
+    # )
     client = bigquery.Client()
     query = "SELECT * FROM loyal-copilot-329917.churn.cust_demo_info"
     df_entity = client.query(query).to_dataframe()
@@ -76,8 +76,10 @@ def main():
 
     (X, y) = load_data()
 
-    tracking.log_data_ref(content=X, name="dataset_X")
-    tracking.log_data_ref(content=y, name="dataset_y")
+    # tracking.log_data_ref(content=X, name="dataset_X")
+    # tracking.log_data_ref(content=y, name="dataset_y")
+    tracking.log_dataframe(X, name="dataset_X")
+    tracking.log_dataframe(y, name="dataset_y")
 
     classifier = RandomForestClassifier(n_estimators=args.n_estimators, max_depth=args.max_depth)
 
