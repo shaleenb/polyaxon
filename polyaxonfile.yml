@@ -4,15 +4,16 @@ tags: [scikit-learn]
 inputs:
 - {name: n_estimators, type: int, isOptional: true, value: 50}
 - {name: max_depth, type: int, isOptional: true, value: 3}
+- {name: git_repo, type: str}
 
 run:
   kind: job
   init:
-  - git: {url: "https://github.com/shaleenb/polyaxon"}
+  - git: {url: "https://github.com/shaleenb/{{ git_repo }}"}
 
   container:
     image: gcr.io/loyal-copilot-329917/polyaxon
-    workingDir: "{{ globals.artifacts_path }}/polyaxon"
+    workingDir: "{{ globals.artifacts_path }}/{{ git_repo }}"
     command: [python3, model.py]
     args: [
       "--n_estimators={{ n_estimators }}",
